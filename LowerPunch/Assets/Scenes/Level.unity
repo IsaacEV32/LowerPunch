@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 1136787468}
   - component: {fileID: 1136787469}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,6 +637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveDir: {x: 0, y: 0}
   speed: 4
+  velocity: {x: 0, y: 0, z: 0}
+  jumpForce: 2
+  gravity: -9.8
 --- !u!114 &1136787468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +681,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 89f4b725-c452-407f-b406-3fd318efe116
     m_ActionName: 'Movement/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1136787467}
+        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+        m_MethodName: OnJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ea41492d-966b-4083-a2a0-c6fc9a00d0ee
+    m_ActionName: 'Movement/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
