@@ -22,7 +22,6 @@ public class HUDSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(maxHealth);
         fillHealthPlayer.fillAmount = character.health/maxHealth;
         fillSpecialPlayer.fillAmount = character.specialPoints / maxSpecial;
         //fillChronometerPlayer.fillAmount -= (10 * Time.deltaTime); 

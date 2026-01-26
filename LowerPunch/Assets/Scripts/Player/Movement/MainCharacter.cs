@@ -20,17 +20,27 @@ public class MainCharacter : MonoBehaviour
 
     private float jumpTimeStamp;
     private float jumpTime = 0.2f;
-    private bool jumpButtonPressed = false;
+
     private bool _movementInputPressed = false;
+
+    private bool lookLeft = true;
+
+    private bool chronometer = false;
+    private float chronometerDelay = 0;
+    private float punchWeakDelay = 0.5f;
+
     private void Awake()
     {
         HUD.SetReferencePlayer(this);
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f));
+    }
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        Debug.Log(health);
-        
     }
     public void OnMoveInput(InputAction.CallbackContext contextMove)
     {
@@ -43,6 +53,14 @@ public class MainCharacter : MonoBehaviour
             _movementInputPressed = false;
         }
         MoveDir = contextMove.ReadValue<Vector2>();
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            lookLeft = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            lookLeft = false;
+        }
     }
     public void OnJumpInput(InputAction.CallbackContext contextJump)
     {
@@ -60,6 +78,38 @@ public class MainCharacter : MonoBehaviour
             }
         }
     }
+    public void OnWeakPunch(InputAction.CallbackContext contextPunch)
+    {
+        if (contextPunch.performed && controller.isGrounded && !chronometer)
+        {
+            chronometer = true;
+            if (lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
+                Debug.Log("Golpe suelo izquierda");
+            }
+            else if (!lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
+                Debug.Log("Golpe suelo derecha");
+            }
+            
+        }
+        else if (contextPunch.performed && !controller.isGrounded && !chronometer)
+        {
+            if (lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
+                Debug.Log("Golpe aire izquierda");
+            }
+            else if (!lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
+                Debug.Log("Golpe aire derecha");
+            }
+        }
+
+    }
     private void Update()
     {
         if (_movementInputPressed)
@@ -69,5 +119,14 @@ public class MainCharacter : MonoBehaviour
         }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+        if (chronometer)
+        {
+            chronometerDelay += Time.deltaTime;
+            if (chronometerDelay > punchWeakDelay)
+            {
+                chronometer = false;
+                chronometerDelay = 0;
+            }
+        }
     }
 }
