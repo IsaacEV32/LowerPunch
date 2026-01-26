@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class MainCharacter : MonoBehaviour
 {
+    internal int health = 100;
+    internal int specialPoints = 0;
+
+    public HUDSystem HUD;
+
     public Vector2 MoveDir = Vector2.zero;
     private CharacterController controller;
     [SerializeField] float speed = 4f;
@@ -17,9 +22,15 @@ public class MainCharacter : MonoBehaviour
     private float jumpTime = 0.2f;
     private bool jumpButtonPressed = false;
     private bool _movementInputPressed = false;
+    private void Awake()
+    {
+        HUD.SetReferencePlayer(this);
+    }
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        Debug.Log(health);
+        
     }
     public void OnMoveInput(InputAction.CallbackContext contextMove)
     {
