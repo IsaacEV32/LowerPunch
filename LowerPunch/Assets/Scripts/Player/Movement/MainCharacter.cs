@@ -128,13 +128,14 @@ public class MainCharacter : MonoBehaviour
     }
     public void OnStrongPunch(InputAction.CallbackContext contextHardPunch)
     {
-        if (contextHardPunch.performed && controller.isGrounded)
+        if (contextHardPunch.performed && controller.isGrounded && contextHardPunch.duration > 0.3f)
         {
             strongPunchChronometer = true;
             Weakchronometer = false;
             chronometer = false;
             chronometerWeakDelay = 0;
             numberOfWeakPunches = 0;
+
             Debug.Log("Combo Cancelado");
             if (lookLeft)
             {
