@@ -26,8 +26,17 @@ public class MainCharacter : MonoBehaviour
     private bool lookLeft = true;
 
     private bool chronometer = false;
-    private float chronometerDelay = 0;
+
+    private bool Weakchronometer = false;
+    private float chronometerWeakDelay = 0;
     private float punchWeakDelay = 0.5f;
+    private float chronometerForLimitPunchWeak = 0.6f;
+    private int numberOfWeakPunches = 0;
+
+
+    private bool airPunchChronometer = false;
+    private float airPunchChronometerDelay = 0;
+    private float airPunchDelay = 1f;
 
     private void Awake()
     {
@@ -80,9 +89,10 @@ public class MainCharacter : MonoBehaviour
     }
     public void OnWeakPunch(InputAction.CallbackContext contextPunch)
     {
-        if (contextPunch.performed && controller.isGrounded && !chronometer)
+        if (contextPunch.performed && controller.isGrounded && !Weakchronometer)
         {
             chronometer = true;
+            Weakchronometer = true;
             if (lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
@@ -93,10 +103,12 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
                 Debug.Log("Golpe suelo derecha");
             }
-            
+            numberOfWeakPunches++;
+            Debug.Log("Golpe suelo derecha : " + numberOfWeakPunches);
         }
-        else if (contextPunch.performed && !controller.isGrounded && !chronometer)
+        else if (contextPunch.performed && !controller.isGrounded && !airPunchChronometer)
         {
+            airPunchChronometer = true;
             if (lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
@@ -107,6 +119,43 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
                 Debug.Log("Golpe aire derecha");
             }
+        }
+
+    }
+    private void DelayForWeakPunches()
+    {
+        if (numberOfWeakPunches == 3)
+        {
+            Weakchronometer = true;
+            punchWeakDelay = 0.5f;
+            if (chronometerWeakDelay > punchWeakDelay)
+            {
+                Weakchronometer = false;
+                chronometer = false;
+                chronometerWeakDelay = 0;
+                numberOfWeakPunches = 0;
+                Debug.Log("Reinicio del combo de golpes");
+            }
+        }
+        else if (numberOfWeakPunches <= 3)
+        {
+            punchWeakDelay = 0.2f;
+            if (chronometerWeakDelay > punchWeakDelay)
+            {
+                Weakchronometer = false;
+                chronometerWeakDelay = 0;
+            }
+        }
+    }
+    private void DelayForAirPunches()
+    {
+        airPunchChronometerDelay += Time.deltaTime;
+        airPunchDelay = 1f;
+        if (airPunchChronometerDelay > airPunchDelay)
+        {
+            airPunchChronometer = false;
+            airPunchChronometerDelay = 0;
+            Debug.Log("Delay en el aire completado");
         }
 
     }
@@ -121,12 +170,25 @@ public class MainCharacter : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
         if (chronometer)
         {
-            chronometerDelay += Time.deltaTime;
-            if (chronometerDelay > punchWeakDelay)
+            chronometerWeakDelay += Time.deltaTime;
+            if (chronometerForLimitPunchWeak < chronometerWeakDelay)
             {
+                Weakchronometer = false;
                 chronometer = false;
-                chronometerDelay = 0;
+                chronometerWeakDelay = 0;
+                numberOfWeakPunches = 0;
+                Debug.Log("Combo Cancelado");
+            }
+            if (Weakchronometer)
+            {
+                DelayForWeakPunches();
+            }
+            else if (airPunchChronometer)
+            {
+                DelayForAirPunches();
             }
         }
+
+
     }
 }
