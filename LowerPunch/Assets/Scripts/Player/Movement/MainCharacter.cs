@@ -38,6 +38,10 @@ public class MainCharacter : MonoBehaviour
     private float airPunchChronometerDelay = 0;
     private float airPunchDelay = 1f;
 
+    private bool strongPunchChronometer = false;
+    private float strongPunchChronometerDelay = 0;
+    private float strongPunchDelay = 0.6f;
+
     private void Awake()
     {
         HUD.SetReferencePlayer(this);
@@ -45,7 +49,7 @@ public class MainCharacter : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f));
+        Gizmos.DrawWireCube(transform.position + new Vector3(1.25f, 0, 0), new Vector3(1.5f, 1.25f, 1f));
     }
     private void Start()
     {
@@ -122,6 +126,28 @@ public class MainCharacter : MonoBehaviour
         }
 
     }
+    public void OnStrongPunch(InputAction.CallbackContext contextHardPunch)
+    {
+        if (contextHardPunch.performed && controller.isGrounded)
+        {
+            strongPunchChronometer = true;
+            Weakchronometer = false;
+            chronometer = false;
+            chronometerWeakDelay = 0;
+            numberOfWeakPunches = 0;
+            Debug.Log("Combo Cancelado");
+            if (lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
+                Debug.Log("Golpe Fuerte suelo izquierda");
+            }
+            else if (!lookLeft)
+            {
+                Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
+                Debug.Log("Golpe Fuerte suelo derecha");
+            }
+        }
+    }
     private void DelayForWeakPunches()
     {
         if (numberOfWeakPunches == 3)
@@ -159,15 +185,18 @@ public class MainCharacter : MonoBehaviour
         }
 
     }
-    private void Update()
+    private void DelayForStrongPunches()
     {
-        if (_movementInputPressed)
+        strongPunchChronometerDelay += Time.deltaTime;
+        if (strongPunchChronometerDelay > strongPunchDelay)
         {
-            Vector3 move = new Vector3(MoveDir.x, 0, MoveDir.y);
-            controller.Move(move.normalized * speed * Time.deltaTime);
+            strongPunchChronometer = false;
+            strongPunchChronometerDelay = 0;
+            Debug.Log("Golpe Fuerte completado");
         }
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+    }
+    private void HandlerAttacksDelay()
+    {
         if (chronometer)
         {
             chronometerWeakDelay += Time.deltaTime;
@@ -188,7 +217,21 @@ public class MainCharacter : MonoBehaviour
                 DelayForAirPunches();
             }
         }
+        else if (strongPunchChronometer)
+        {
+            DelayForStrongPunches();
+        }
+    }
+    private void Update()
+    {
+        if (_movementInputPressed)
+        {
+            Vector3 move = new Vector3(MoveDir.x, 0, MoveDir.y);
+            controller.Move(move.normalized * speed * Time.deltaTime);
+        }
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
 
-
+        HandlerAttacksDelay();
     }
 }

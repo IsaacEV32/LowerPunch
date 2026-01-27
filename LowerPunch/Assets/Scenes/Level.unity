@@ -1141,7 +1141,19 @@ MonoBehaviour:
     m_ActionId: 1e238151-4f65-4138-b8cf-995e6637510a
     m_ActionName: 'Movement/WeakPunch[/Keyboard/j]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1136787467}
+        m_TargetAssemblyTypeName: MainCharacter, Assembly-CSharp
+        m_MethodName: OnStrongPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4bfc38dc-ebc6-4f68-9ebf-bde5091b2dc5
     m_ActionName: 'Movement/StrongPunch[/Keyboard/k]'
   - m_PersistentCalls:
