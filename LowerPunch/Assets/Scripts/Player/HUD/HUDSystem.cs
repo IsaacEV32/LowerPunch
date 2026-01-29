@@ -6,13 +6,12 @@ public class HUDSystem : MonoBehaviour
     public Image fillSpecialPlayer;
     public Image fillChronometerPlayer;
     public MainCharacter character;
-    public int maxHealth = 100;
-    public int maxSpecial = 50;
+    public float maxHealth = 100;
+    public float maxSpecial = 50;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetReferencePlayer(MainCharacter c)
     {
         character = c;
-        Debug.Log(character);
     }
     void Start()
     {
@@ -23,7 +22,11 @@ public class HUDSystem : MonoBehaviour
     void Update()
     {
         fillHealthPlayer.fillAmount = character.health/maxHealth;
-        fillSpecialPlayer.fillAmount = character.specialPoints / maxSpecial;
+        if (character.increaseSpecialBar)
+        {
+            fillSpecialPlayer.fillAmount = character.specialPoints / maxSpecial;
+            character.increaseSpecialBar = false;
+        }
         //fillChronometerPlayer.fillAmount -= (10 * Time.deltaTime); 
     }
 }

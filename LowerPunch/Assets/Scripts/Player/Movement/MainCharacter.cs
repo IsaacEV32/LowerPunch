@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class MainCharacter : MonoBehaviour
 {
-    internal int health = 100;
-    internal int specialPoints = 0;
+    internal float health = 100;
+    internal float specialPoints = 0;
 
     public HUDSystem HUD;
 
@@ -45,6 +45,8 @@ public class MainCharacter : MonoBehaviour
     private bool specialActivated = false;
     private float specialDamageTimer;
     private float specialDamageDuration = 3;
+
+    internal bool increaseSpecialBar = false;
     private void Awake()
     {
         HUD.SetReferencePlayer(this);
@@ -104,11 +106,28 @@ public class MainCharacter : MonoBehaviour
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
                 Debug.Log("Golpe suelo izquierda");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 5;
+                    }
+                }
             }
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
                 Debug.Log("Golpe suelo derecha");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 5;
+                        Debug.Log(specialPoints);
+                    }
+                }
             }
             numberOfWeakPunches++;
             Debug.Log("Golpe suelo derecha : " + numberOfWeakPunches);
@@ -120,11 +139,27 @@ public class MainCharacter : MonoBehaviour
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
                 Debug.Log("Golpe aire izquierda");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 5;
+                    }
+                }
             }
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
                 Debug.Log("Golpe aire derecha");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 5;
+                    }
+                }
             }
         }
 
@@ -144,17 +179,33 @@ public class MainCharacter : MonoBehaviour
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
                 Debug.Log("Golpe Fuerte suelo izquierda");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 10;
+                    }
+                }
             }
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
                 Debug.Log("Golpe Fuerte suelo derecha");
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    {
+                        increaseSpecialBar = true;
+                        specialPoints += 10;
+                    }
+                }
             }
         }
     }
     public void OnSpecialPunch(InputAction.CallbackContext contextSpecial)
     {
-        if (contextSpecial.performed && controller.isGrounded && contextSpecial.duration > 0.4f)
+        if (contextSpecial.performed && controller.isGrounded && contextSpecial.duration > 0.4f && specialPoints >= 50)
         {
             specialActivated = true;
         }
@@ -253,14 +304,13 @@ public class MainCharacter : MonoBehaviour
             Vector3 move = new Vector3(MoveDir.x, 0, MoveDir.y);
             controller.Move(move.normalized * speed * Time.deltaTime);
         }
-        if(!specialActivated)
+        if (!specialActivated)
         {
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
         }
         HandlerAttacksDelay();
-
-        if(specialActivated)
+        if (specialActivated)
         {
             if (specialDamageTimer <= 0)
             {
@@ -272,6 +322,15 @@ public class MainCharacter : MonoBehaviour
                 SpecialPunch();
                 specialDamageTimer -= Time.deltaTime;
             }
+            ResetSpecialPoints(true);
+        }
+    }
+    private void ResetSpecialPoints(bool check)
+    {
+        if (check && specialDamageTimer <= 0)
+        {
+            increaseSpecialBar = true;
+            specialPoints = 0;
         }
     }
 }
