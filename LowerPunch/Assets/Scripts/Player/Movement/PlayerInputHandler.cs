@@ -134,7 +134,7 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
                     ""id"": ""2891c357-6c9f-4412-b46f-7cff0be24bfb"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 }
             ],

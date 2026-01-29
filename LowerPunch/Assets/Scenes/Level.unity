@@ -1157,7 +1157,19 @@ MonoBehaviour:
     m_ActionId: 4bfc38dc-ebc6-4f68-9ebf-bde5091b2dc5
     m_ActionName: 'Movement/StrongPunch[/Keyboard/k]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1136787467}
+        m_TargetAssemblyTypeName: MainCharacter, Assembly-CSharp
+        m_MethodName: OnSpecialPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 2891c357-6c9f-4412-b46f-7cff0be24bfb
     m_ActionName: 'Movement/SpecialAttack[/Keyboard/l]'
   m_NeverAutoSwitchControlSchemes: 0
