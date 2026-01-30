@@ -110,6 +110,8 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -123,6 +125,9 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        Debug.Log(enemy);
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 5;
                         Debug.Log(specialPoints);
@@ -143,6 +148,8 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -156,6 +163,8 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -183,6 +192,8 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 10;
                     }
@@ -196,6 +207,8 @@ public class MainCharacter : MonoBehaviour
                 {
                     if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
                     {
+                        Enemy enemy = collider.GetComponent<Enemy>();
+                        enemy.healthEnemy -= 5;
                         increaseSpecialBar = true;
                         specialPoints += 10;
                     }
@@ -215,11 +228,27 @@ public class MainCharacter : MonoBehaviour
         if (lookLeft)
         {
             Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(4f, 0, 0), new Vector3(7f, 1.25f, 1f), Quaternion.identity);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.CompareTag("Enemy"))
+                {
+                    Enemy enemy = collider.GetComponent<Enemy>();
+                    enemy.healthEnemy -= 15;
+                }
+            }
             Debug.Log("Special izquierda");
         }
         else if (!lookLeft)
         {
             Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-4f, 0, 0), new Vector3(7f, 1.25f, 1f), Quaternion.identity);
+            foreach (Collider collider in colliders)
+            {
+                if (collider.CompareTag("Enemy"))
+                {
+                    Enemy enemy = collider.GetComponent<Enemy>();
+                    enemy.healthEnemy -= 15;
+                }
+            }
             Debug.Log("Special derecha");
         }
     }
