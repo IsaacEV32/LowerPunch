@@ -109,6 +109,33 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeakPunch"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e238151-4f65-4138-b8cf-995e6637510a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StrongPunch"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bfc38dc-ebc6-4f68-9ebf-bde5091b2dc5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""2891c357-6c9f-4412-b46f-7cff0be24bfb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,6 +204,39 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ab0ce0f-1a34-4179-8e74-46f297abfa5d"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeakPunch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9d7c34d-031a-4d5b-945a-f31a5f972be6"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StrongPunch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b86209f-f662-42d5-948b-64e92ea035c4"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +247,9 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Movement = m_Movement.FindAction("Movement", throwIfNotFound: true);
         m_Movement_Jump = m_Movement.FindAction("Jump", throwIfNotFound: true);
+        m_Movement_WeakPunch = m_Movement.FindAction("WeakPunch", throwIfNotFound: true);
+        m_Movement_StrongPunch = m_Movement.FindAction("StrongPunch", throwIfNotFound: true);
+        m_Movement_SpecialAttack = m_Movement.FindAction("SpecialAttack", throwIfNotFound: true);
     }
 
     ~@PlayerInputHandler()
@@ -269,6 +332,9 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Movement;
     private readonly InputAction m_Movement_Jump;
+    private readonly InputAction m_Movement_WeakPunch;
+    private readonly InputAction m_Movement_StrongPunch;
+    private readonly InputAction m_Movement_SpecialAttack;
     /// <summary>
     /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
@@ -288,6 +354,18 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Movement/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_Movement_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/WeakPunch".
+        /// </summary>
+        public InputAction @WeakPunch => m_Wrapper.m_Movement_WeakPunch;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/StrongPunch".
+        /// </summary>
+        public InputAction @StrongPunch => m_Wrapper.m_Movement_StrongPunch;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/SpecialAttack".
+        /// </summary>
+        public InputAction @SpecialAttack => m_Wrapper.m_Movement_SpecialAttack;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -320,6 +398,15 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @WeakPunch.started += instance.OnWeakPunch;
+            @WeakPunch.performed += instance.OnWeakPunch;
+            @WeakPunch.canceled += instance.OnWeakPunch;
+            @StrongPunch.started += instance.OnStrongPunch;
+            @StrongPunch.performed += instance.OnStrongPunch;
+            @StrongPunch.canceled += instance.OnStrongPunch;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
         }
 
         /// <summary>
@@ -337,6 +424,15 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @WeakPunch.started -= instance.OnWeakPunch;
+            @WeakPunch.performed -= instance.OnWeakPunch;
+            @WeakPunch.canceled -= instance.OnWeakPunch;
+            @StrongPunch.started -= instance.OnStrongPunch;
+            @StrongPunch.performed -= instance.OnStrongPunch;
+            @StrongPunch.canceled -= instance.OnStrongPunch;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
         }
 
         /// <summary>
@@ -391,5 +487,26 @@ public partial class @PlayerInputHandler: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "WeakPunch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnWeakPunch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "StrongPunch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnStrongPunch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SpecialAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpecialAttack(InputAction.CallbackContext context);
     }
 }
