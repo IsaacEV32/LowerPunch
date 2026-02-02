@@ -108,10 +108,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe suelo izquierda");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(5);
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -123,11 +122,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe suelo derecha");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        Debug.Log(enemy);
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(5);
                         increaseSpecialBar = true;
                         specialPoints += 5;
                         Debug.Log(specialPoints);
@@ -146,10 +143,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe aire izquierda");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(5);
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -161,10 +157,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe aire derecha");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(5);
                         increaseSpecialBar = true;
                         specialPoints += 5;
                     }
@@ -190,10 +185,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe Fuerte suelo izquierda");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(10);
                         increaseSpecialBar = true;
                         specialPoints += 10;
                     }
@@ -205,10 +199,9 @@ public class MainCharacter : MonoBehaviour
                 Debug.Log("Golpe Fuerte suelo derecha");
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.CompareTag("Enemy") && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
                     {
-                        Enemy enemy = collider.GetComponent<Enemy>();
-                        enemy.healthEnemy -= 5;
+                        E.ReceiveDamage(10);
                         increaseSpecialBar = true;
                         specialPoints += 10;
                     }
@@ -230,10 +223,9 @@ public class MainCharacter : MonoBehaviour
             Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(4f, 0, 0), new Vector3(7f, 1.25f, 1f), Quaternion.identity);
             foreach (Collider collider in colliders)
             {
-                if (collider.CompareTag("Enemy"))
+                if (collider.TryGetComponent<Enemy>(out Enemy E))
                 {
-                    Enemy enemy = collider.GetComponent<Enemy>();
-                    enemy.healthEnemy -= 15;
+                    E.ReceiveDamage(15);
                 }
             }
             Debug.Log("Special izquierda");
@@ -243,10 +235,9 @@ public class MainCharacter : MonoBehaviour
             Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-4f, 0, 0), new Vector3(7f, 1.25f, 1f), Quaternion.identity);
             foreach (Collider collider in colliders)
             {
-                if (collider.CompareTag("Enemy"))
+                if (collider.TryGetComponent<Enemy>(out Enemy E))
                 {
-                    Enemy enemy = collider.GetComponent<Enemy>();
-                    enemy.healthEnemy -= 15;
+                    E.ReceiveDamage(15);
                 }
             }
             Debug.Log("Special derecha");
@@ -352,6 +343,13 @@ public class MainCharacter : MonoBehaviour
                 specialDamageTimer -= Time.deltaTime;
             }
             ResetSpecialPoints(true);
+        }
+    }
+    public virtual void ReceiveDamage(int damagePoints)
+    {
+        if (health > 0)
+        {
+            health -= damagePoints;
         }
     }
     private void ResetSpecialPoints(bool check)
