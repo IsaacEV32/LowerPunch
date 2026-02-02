@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     internal float recoverEnemy;
     protected NavMeshAgent enemy;
     internal bool lookLeft = false;
+    internal States actualState = States.Chase;
     private void Awake()
     {
         enemy = this.GetComponent<NavMeshAgent>();
