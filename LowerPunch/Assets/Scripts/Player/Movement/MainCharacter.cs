@@ -47,6 +47,7 @@ public class MainCharacter : MonoBehaviour
     private float specialDamageDuration = 3;
 
     internal bool increaseSpecialBar = false;
+    internal bool changeHealthPoints = false;
     private void Awake()
     {
         HUD.SetReferencePlayer(this);
@@ -350,6 +351,8 @@ public class MainCharacter : MonoBehaviour
         if (health > 0)
         {
             health -= damagePoints;
+            changeHealthPoints = true;
+            Debug.Log(health);
         }
     }
     private void ResetSpecialPoints(bool check)

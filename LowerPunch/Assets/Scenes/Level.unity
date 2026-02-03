@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f9c5a1f03b23f46bf16f4e6bbc47d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillHealthPlayer: {fileID: 593132436}
+  fillHealthPlayer: {fileID: 676769240}
   fillSpecialPlayer: {fileID: 933725212}
   fillChronometerPlayer: {fileID: 1044840102}
   character: {fileID: 0}
