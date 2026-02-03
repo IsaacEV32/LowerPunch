@@ -4,6 +4,6 @@ using UnityEngine;
 public class EnemyStats : ScriptableObject
 {
     [SerializeField] internal float healthEnemy;
-    [SerializeField] internal float damageEnemy;
+    [SerializeField] internal int damageEnemy;
     [SerializeField] internal float recoverEnemy;
 }

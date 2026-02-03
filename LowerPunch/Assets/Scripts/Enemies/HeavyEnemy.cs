@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class NormalEnemy : Enemy
+public class HeavyEnemy : Enemy
 {
     [SerializeField] internal GameObject objective;
     [SerializeField] internal EnemyStats stats;
@@ -19,7 +19,7 @@ public class NormalEnemy : Enemy
     protected override void Chase()
     {
         enemy.SetDestination(objective.transform.position);
-        if (enemy.remainingDistance <= 1)
+        if (enemy.remainingDistance <= 2)
         {
             actualState = States.Attack;
         }
@@ -54,7 +54,7 @@ public class NormalEnemy : Enemy
             actualState = States.Sleep;
             Debug.Log("Golpe Enemigo derecha");
         }
-        if (enemy.remainingDistance > 1)
+        if (enemy.remainingDistance > 2)
         {
             actualState = States.Chase;
             chronometerPunch = 0;
