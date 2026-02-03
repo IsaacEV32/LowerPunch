@@ -68,7 +68,11 @@ public class NormalEnemy : Enemy
             actualState = States.Chase;
             chronometerSleep = 0;
         }
-
+    }
+    protected override void Dead()
+    {
+        actualState = States.Dead;
+        this.gameObject.SetActive(false);
     }
     private void Update()
     {

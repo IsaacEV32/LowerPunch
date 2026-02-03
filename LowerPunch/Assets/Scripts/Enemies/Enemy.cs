@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
         healthEnemy = eS.healthEnemy;
         damageEnemy = eS.damageEnemy;
         recoverEnemy = eS.recoverEnemy;
+        actualState = States.Chase;
     }
     public virtual void ReceiveDamage(int damagePoints)
     {
@@ -36,7 +37,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            this.gameObject.SetActive(false);
+            Dead();
         }
     }
     protected virtual void Chase() { }
