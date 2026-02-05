@@ -73,6 +73,7 @@ public class NormalEnemy : Enemy
     {
         actualState = States.Dead;
         this.gameObject.SetActive(false);
+        SpawnPointsEnemy.instance.DeactivateSpawnPoint();
     }
     private void Update()
     {
