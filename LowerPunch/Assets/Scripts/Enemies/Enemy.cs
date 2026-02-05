@@ -9,7 +9,10 @@ public enum States
 {
     Chase, Attack, Sleep, Dead
 }
-
+public enum TypeOfEnemy
+{
+    NormalEnemy , HeavyEnemy
+}
 public class Enemy : MonoBehaviour
 {
     internal float healthEnemy;
@@ -18,6 +21,7 @@ public class Enemy : MonoBehaviour
     protected NavMeshAgent enemy;
     internal bool lookLeft = false;
     internal States actualState = States.Chase;
+    protected internal TypeOfEnemy type;
     private void Awake()
     {
         enemy = this.GetComponent<NavMeshAgent>();
@@ -38,6 +42,7 @@ public class Enemy : MonoBehaviour
         else
         {
             Dead();
+            SpawnPointsEnemy.instance.numberOfEnemiesInScene -= 1;
         }
     }
     protected virtual void Chase() { }

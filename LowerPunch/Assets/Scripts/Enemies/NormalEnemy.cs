@@ -15,6 +15,7 @@ public class NormalEnemy : Enemy
     private void OnEnable()
     {
         InitStats(stats);
+        type = TypeOfEnemy.NormalEnemy;
     }
     protected override void Chase()
     {
@@ -73,7 +74,6 @@ public class NormalEnemy : Enemy
     {
         actualState = States.Dead;
         this.gameObject.SetActive(false);
-        SpawnPointsEnemy.instance.DeactivateSpawnPoint();
     }
     private void Update()
     {

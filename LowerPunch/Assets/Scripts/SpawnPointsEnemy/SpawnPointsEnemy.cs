@@ -10,8 +10,13 @@ public class SpawnPointsEnemy : MonoBehaviour
     [SerializeField] List<GameObject> heavyEnemies = new List<GameObject>();
     [SerializeField] GameObject normalEnemy;
     [SerializeField] GameObject heavyEnemy;
+    [SerializeField] int numberOfNormalEnemies = 5;
+    [SerializeField] int numberOfHeavyEnemies = 2;
+
+    internal int numberOfEnemiesInScene;
 
     public static SpawnPointsEnemy instance;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,51 +32,73 @@ public class SpawnPointsEnemy : MonoBehaviour
         GameObject tmpHE;
         for (int i = 0; i < numberOfSpawnPoints; i++)
         {
-            spawnPointsActived[i].SetActive(false);
+            spawnPointsActived[i].SetActive(true);
+        }
+        for (int i = 0; i < numberOfNormalEnemies; i++)
+        {
             tmpNE = Instantiate(normalEnemy);
-            tmpHE = Instantiate(heavyEnemy);
             tmpNE.SetActive(false);
-            tmpHE.SetActive(false);
             normalEnemies.Add(tmpNE);
+        }
+        for (int i = 0; i < numberOfHeavyEnemies; i++)
+        {
+            tmpHE = Instantiate(heavyEnemy);
+            tmpHE.SetActive(false);
             heavyEnemies.Add(tmpHE);
         }
     }
-
-    void SpawnEnemies()
+    void SelectEnemyToSpawn()
     {
-        for (int i = 0; i < numberOfSpawnPoints; i++)
+        if (numberOfEnemiesInScene < 3)
         {
-            if (!spawnPointsActived[i].activeInHierarchy)
+            float probability = Random.value;
+            Debug.Log(probability);
+            if (probability > 0.25)
             {
-                spawnPointsActived[i].SetActive(true);
+                SpawnEnemies(TypeOfEnemy.NormalEnemy);
             }
-        }
-        for (int i = 0; i < numberOfSpawnPoints; i++)
-        {
-            if (!normalEnemies[i].activeInHierarchy)
+            else if (probability < 0.25)
             {
-                normalEnemies[i].transform.position = spawnPointsActived[i].transform.position;
-                normalEnemies[i].SetActive(true);
+                SpawnEnemies(TypeOfEnemy.HeavyEnemy);
             }
-           
+            
         }
     }
-
-    public void DeactivateSpawnPoint()
+    void SpawnEnemies(TypeOfEnemy e)
     {
-        for (int i = 0; i < numberOfSpawnPoints; i++)
+        if (e == TypeOfEnemy.NormalEnemy)
         {
-            if (spawnPointsActived[i].activeInHierarchy)
+            for (int i = 0; i < normalEnemies.Count; i++)
             {
-                spawnPointsActived[i].SetActive(false);
-                break;
+                if (!normalEnemies[i].activeInHierarchy )
+                {
+                    normalEnemies[i].transform.position = spawnPointsActived[Random.Range(0, spawnPointsActived.Count)].transform.position;
+                    normalEnemies[i].SetActive(true);
+
+                    numberOfEnemiesInScene += 1;
+                    break;
+                }
+            }
+        }
+        else if (e == TypeOfEnemy.HeavyEnemy)
+        {
+
+            for (int i = 0; i < heavyEnemies.Count; i++)
+            {
+                if (!heavyEnemies[i].activeInHierarchy)
+                {
+                    heavyEnemies[i].transform.position = spawnPointsActived[Random.Range(0, spawnPointsActived.Count)].transform.position;
+                    heavyEnemies[i].SetActive(true);
+
+                    numberOfEnemiesInScene += 1;
+                    break;
+                }
             }
         }
     }
-
     // Update is called once per frame
     void Update()
     {
-        SpawnEnemies();
+        SelectEnemyToSpawn();
     }
 }

@@ -15,6 +15,7 @@ public class HeavyEnemy : Enemy
     private void OnEnable()
     {
         InitStats(stats);
+        type = TypeOfEnemy.HeavyEnemy;
     }
     protected override void Chase()
     {
