@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         else
         {
             Dead();
-            SpawnPointsEnemy.instance.numberOfEnemiesInScene -= 1;
+            SpawnPointsEnemy.instance.EnemyKilled();
         }
     }
     protected virtual void Chase() { }

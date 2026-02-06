@@ -55,7 +55,7 @@ public class MainCharacter : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position + new Vector3(-4f, 0, 0), new Vector3(7f, 1.25f, 1f));
+        Gizmos.DrawWireCube(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f));
     }
     private void Start()
     {
@@ -106,7 +106,6 @@ public class MainCharacter : MonoBehaviour
             if (lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
-                Debug.Log("Golpe suelo izquierda");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -120,7 +119,6 @@ public class MainCharacter : MonoBehaviour
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
-                Debug.Log("Golpe suelo derecha");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -128,12 +126,10 @@ public class MainCharacter : MonoBehaviour
                         E.ReceiveDamage(5);
                         increaseSpecialBar = true;
                         specialPoints += 5;
-                        Debug.Log(specialPoints);
                     }
                 }
             }
             numberOfWeakPunches++;
-            Debug.Log("Golpe suelo derecha : " + numberOfWeakPunches);
         }
         else if (contextPunch.performed && !controller.isGrounded && !airPunchChronometer && !specialActivated)
         {
@@ -141,7 +137,6 @@ public class MainCharacter : MonoBehaviour
             if (lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
-                Debug.Log("Golpe aire izquierda");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -155,7 +150,6 @@ public class MainCharacter : MonoBehaviour
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
-                Debug.Log("Golpe aire derecha");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -167,7 +161,6 @@ public class MainCharacter : MonoBehaviour
                 }
             }
         }
-
     }
     public void OnStrongPunch(InputAction.CallbackContext contextHardPunch)
     {
@@ -179,11 +172,9 @@ public class MainCharacter : MonoBehaviour
             chronometerWeakDelay = 0;
             numberOfWeakPunches = 0;
 
-            Debug.Log("Combo Cancelado");
             if (lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
-                Debug.Log("Golpe Fuerte suelo izquierda");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -197,7 +188,6 @@ public class MainCharacter : MonoBehaviour
             else if (!lookLeft)
             {
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
-                Debug.Log("Golpe Fuerte suelo derecha");
                 foreach (Collider collider in colliders)
                 {
                     if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
@@ -229,7 +219,6 @@ public class MainCharacter : MonoBehaviour
                     E.ReceiveDamage(15);
                 }
             }
-            Debug.Log("Special izquierda");
         }
         else if (!lookLeft)
         {
@@ -241,7 +230,6 @@ public class MainCharacter : MonoBehaviour
                     E.ReceiveDamage(15);
                 }
             }
-            Debug.Log("Special derecha");
         }
     }
     private void DelayForWeakPunches()
@@ -256,7 +244,6 @@ public class MainCharacter : MonoBehaviour
                 chronometer = false;
                 chronometerWeakDelay = 0;
                 numberOfWeakPunches = 0;
-                Debug.Log("Reinicio del combo de golpes");
             }
         }
         else if (numberOfWeakPunches <= 3)
@@ -277,7 +264,6 @@ public class MainCharacter : MonoBehaviour
         {
             airPunchChronometer = false;
             airPunchChronometerDelay = 0;
-            Debug.Log("Delay en el aire completado");
         }
 
     }
@@ -288,7 +274,6 @@ public class MainCharacter : MonoBehaviour
         {
             strongPunchChronometer = false;
             strongPunchChronometerDelay = 0;
-            Debug.Log("Golpe Fuerte completado");
         }
     }
     private void HandlerAttacksDelay()
@@ -302,7 +287,6 @@ public class MainCharacter : MonoBehaviour
                 chronometer = false;
                 chronometerWeakDelay = 0;
                 numberOfWeakPunches = 0;
-                Debug.Log("Combo Cancelado");
             }
             if (Weakchronometer)
             {

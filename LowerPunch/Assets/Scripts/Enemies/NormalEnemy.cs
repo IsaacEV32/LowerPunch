@@ -39,7 +39,6 @@ public class NormalEnemy : Enemy
                 }
             }
             actualState = States.Sleep;
-            Debug.Log("Golpe Enemigo izquierda");
         }
         else if (Physics.Raycast(transform.position, -transform.forward))
         {
@@ -53,7 +52,6 @@ public class NormalEnemy : Enemy
                 }
             }
             actualState = States.Sleep;
-            Debug.Log("Golpe Enemigo derecha");
         }
         if (enemy.remainingDistance > 1)
         {
@@ -72,6 +70,7 @@ public class NormalEnemy : Enemy
     }
     protected override void Dead()
     {
+        Debug.Log("Im Dead");
         actualState = States.Dead;
         this.gameObject.SetActive(false);
     }

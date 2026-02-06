@@ -77,23 +77,32 @@ public class HeavyEnemy : Enemy
     }
     private void Update()
     {
-        switch (actualState)
+        if (healthEnemy > 0)
         {
-            case States.Chase:
-                Chase();
-                break;
-            case States.Attack:
-                chronometerPunch += Time.deltaTime;
-                if (chronometerPunch > delayPunch)
-                {
-                    Attack();
-                    chronometerPunch = 0;
-                }
-                break;
-            case States.Sleep:
-                chronometerSleep += Time.deltaTime;
-                Sleep();
-                break;
+            switch (actualState)
+            {
+                case States.Chase:
+                    Chase();
+                    break;
+                case States.Attack:
+                    chronometerPunch += Time.deltaTime;
+                    if (chronometerPunch > delayPunch)
+                    {
+                        Attack();
+                        chronometerPunch = 0;
+                    }
+                    break;
+                case States.Sleep:
+                    chronometerSleep += Time.deltaTime;
+                    Sleep();
+                    break;
+            }
         }
+        else
+        {
+            Dead();
+            SpawnPointsEnemy.instance.EnemyKilled();
+        }
+
     }
 }

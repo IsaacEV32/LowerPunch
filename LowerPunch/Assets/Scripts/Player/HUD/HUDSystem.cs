@@ -27,7 +27,7 @@ public class HUDSystem : MonoBehaviour
             fillHealthPlayer.fillAmount = character.health / maxHealth;
             character.changeHealthPoints = false;
         }
-        if (character.increaseSpecialBar)
+        if (character.increaseSpecialBar && fillSpecialPlayer.fillAmount <= maxSpecial)
         {
             fillSpecialPlayer.fillAmount = character.specialPoints / maxSpecial;
             character.increaseSpecialBar = false;

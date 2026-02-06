@@ -46,22 +46,23 @@ public class SpawnPointsEnemy : MonoBehaviour
             tmpHE.SetActive(false);
             heavyEnemies.Add(tmpHE);
         }
+        SelectEnemyToSpawn();
     }
     void SelectEnemyToSpawn()
     {
+        float probability = Random.value;
+        Debug.Log(probability);
+        if (probability > 0.25)
+        {
+            SpawnEnemies(TypeOfEnemy.NormalEnemy);
+        }
+        else if (probability < 0.25)
+        {
+            SpawnEnemies(TypeOfEnemy.HeavyEnemy);
+        }
         if (numberOfEnemiesInScene < 3)
         {
-            float probability = Random.value;
-            Debug.Log(probability);
-            if (probability > 0.25)
-            {
-                SpawnEnemies(TypeOfEnemy.NormalEnemy);
-            }
-            else if (probability < 0.25)
-            {
-                SpawnEnemies(TypeOfEnemy.HeavyEnemy);
-            }
-            
+            SelectEnemyToSpawn();
         }
     }
     void SpawnEnemies(TypeOfEnemy e)
@@ -70,7 +71,7 @@ public class SpawnPointsEnemy : MonoBehaviour
         {
             for (int i = 0; i < normalEnemies.Count; i++)
             {
-                if (!normalEnemies[i].activeInHierarchy )
+                if (!normalEnemies[i].activeInHierarchy)
                 {
                     normalEnemies[i].transform.position = spawnPointsActived[Random.Range(0, spawnPointsActived.Count)].transform.position;
                     normalEnemies[i].SetActive(true);
@@ -82,7 +83,6 @@ public class SpawnPointsEnemy : MonoBehaviour
         }
         else if (e == TypeOfEnemy.HeavyEnemy)
         {
-
             for (int i = 0; i < heavyEnemies.Count; i++)
             {
                 if (!heavyEnemies[i].activeInHierarchy)
@@ -96,9 +96,12 @@ public class SpawnPointsEnemy : MonoBehaviour
             }
         }
     }
-    // Update is called once per frame
-    void Update()
+    internal void EnemyKilled()
     {
-        SelectEnemyToSpawn();
+        numberOfEnemiesInScene--;
+        if (numberOfEnemiesInScene < 3)
+        {
+            SelectEnemyToSpawn();
+        }
     }
 }
