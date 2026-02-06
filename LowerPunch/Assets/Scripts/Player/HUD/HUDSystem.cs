@@ -21,8 +21,13 @@ public class HUDSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fillHealthPlayer.fillAmount = character.health/maxHealth;
-        if (character.increaseSpecialBar)
+        if (character.changeHealthPoints)
+        {
+            Debug.Log(character.health);
+            fillHealthPlayer.fillAmount = character.health / maxHealth;
+            character.changeHealthPoints = false;
+        }
+        if (character.increaseSpecialBar && fillSpecialPlayer.fillAmount <= maxSpecial)
         {
             fillSpecialPlayer.fillAmount = character.specialPoints / maxSpecial;
             character.increaseSpecialBar = false;

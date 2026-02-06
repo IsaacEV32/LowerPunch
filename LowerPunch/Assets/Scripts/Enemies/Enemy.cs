@@ -1,17 +1,55 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Rendering;
+using UnityEngine.TextCore.Text;
+using UnityEngine.XR;
 
+public enum States
+{
+    Chase, Attack, Sleep, Dead
+}
+public enum TypeOfEnemy
+{
+    NormalEnemy , HeavyEnemy
+}
 public class Enemy : MonoBehaviour
 {
-    internal float healthEnemy = 15;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    internal float healthEnemy;
+    internal float damageEnemy;
+    internal float recoverEnemy;
+    protected NavMeshAgent enemy;
+    internal bool lookLeft = false;
+    internal States actualState = States.Chase;
+    protected internal TypeOfEnemy type;
+    private void Awake()
     {
-        
+        enemy = this.GetComponent<NavMeshAgent>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public virtual void InitStats(EnemyStats eS)
     {
-        Debug.Log(healthEnemy);
+        healthEnemy = eS.healthEnemy;
+        damageEnemy = eS.damageEnemy;
+        recoverEnemy = eS.recoverEnemy;
+        actualState = States.Chase;
     }
+    public virtual void ReceiveDamage(int damagePoints)
+    {
+        if (healthEnemy > 0)
+        {
+            healthEnemy -= damagePoints;
+            Debug.Log("Recibi daño");
+        }
+        else if(healthEnemy <= 0)
+        {
+            Debug.Log("Me mori");
+            Dead();
+            SpawnPointsEnemy.instance.EnemyKilled();
+        }
+    }
+    protected virtual void Chase() { }
+    protected virtual void Attack() { }
+    protected virtual void Sleep() { }
+    protected virtual void Dead() { }
+    protected virtual void ChangeState() { }
 }
