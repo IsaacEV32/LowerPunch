@@ -38,9 +38,11 @@ public class Enemy : MonoBehaviour
         if (healthEnemy > 0)
         {
             healthEnemy -= damagePoints;
+            Debug.Log("Recibi daño");
         }
-        else
+        else if(healthEnemy <= 0)
         {
+            Debug.Log("Me mori");
             Dead();
             SpawnPointsEnemy.instance.EnemyKilled();
         }

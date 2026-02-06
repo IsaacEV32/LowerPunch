@@ -108,11 +108,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
-                        increaseSpecialBar = true;
-                        specialPoints += 5;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 5;
+                        }
                     }
                 }
             }
@@ -121,11 +124,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(1f, 1.25f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
-                        increaseSpecialBar = true;
-                        specialPoints += 5;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 5;
+                        }
                     }
                 }
             }
@@ -139,11 +145,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
-                        increaseSpecialBar = true;
-                        specialPoints += 5;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 5;
+                        }
                     }
                 }
             }
@@ -152,11 +161,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, -1, 0), new Vector3(1f, 1f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
-                        increaseSpecialBar = true;
-                        specialPoints += 5;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 5;
+                        }
                     }
                 }
             }
@@ -177,11 +189,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(-1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(10);
-                        increaseSpecialBar = true;
-                        specialPoints += 10;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 10;
+                        }
                     }
                 }
             }
@@ -190,11 +205,14 @@ public class MainCharacter : MonoBehaviour
                 Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(1, 0, 0), new Vector3(2f, 1.25f, 1f), Quaternion.identity);
                 foreach (Collider collider in colliders)
                 {
-                    if (collider.TryGetComponent<Enemy>(out Enemy E) && specialPoints < HUD.maxSpecial)
+                    if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(10);
-                        increaseSpecialBar = true;
-                        specialPoints += 10;
+                        if (specialPoints <= HUD.maxSpecial)
+                        {
+                            increaseSpecialBar = true;
+                            specialPoints += 10;
+                        }
                     }
                 }
             }
