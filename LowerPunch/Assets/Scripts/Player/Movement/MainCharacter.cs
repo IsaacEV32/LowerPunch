@@ -111,6 +111,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
+                        HUD.IncreasePuntuation(100);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -127,6 +128,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
+                        HUD.IncreasePuntuation(100);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -148,6 +150,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
+                        HUD.IncreasePuntuation(100);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -164,6 +167,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(5);
+                        HUD.IncreasePuntuation(100);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -192,6 +196,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(10);
+                        HUD.IncreasePuntuation(500);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -208,6 +213,7 @@ public class MainCharacter : MonoBehaviour
                     if (collider.TryGetComponent<Enemy>(out Enemy E))
                     {
                         E.ReceiveDamage(10);
+                        HUD.IncreasePuntuation(500);
                         if (specialPoints <= HUD.maxSpecial)
                         {
                             increaseSpecialBar = true;
@@ -235,6 +241,7 @@ public class MainCharacter : MonoBehaviour
                 if (collider.TryGetComponent<Enemy>(out Enemy E))
                 {
                     E.ReceiveDamage(15);
+                    HUD.IncreasePuntuation(100);
                 }
             }
         }
@@ -246,6 +253,7 @@ public class MainCharacter : MonoBehaviour
                 if (collider.TryGetComponent<Enemy>(out Enemy E))
                 {
                     E.ReceiveDamage(15);
+                    HUD.IncreasePuntuation(100);
                 }
             }
         }

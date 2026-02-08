@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class HUDSystem : MonoBehaviour
@@ -9,10 +10,12 @@ public class HUDSystem : MonoBehaviour
     public MainCharacter character;
     public float maxHealth = 100;
     public float maxSpecial = 50;
+    public int puntuation = 0;
     bool chronometerON = true;
     bool isTheRoundFinished = false;
     [SerializeField] GameObject winScreen;
     [SerializeField] GameObject loseScreen;
+    [SerializeField] TextMeshProUGUI puntuationHUD;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetReferencePlayer(MainCharacter c)
     {
@@ -56,6 +59,12 @@ public class HUDSystem : MonoBehaviour
             winScreen.SetActive(true);
             
         }
+    }
+    internal void IncreasePuntuation(int p)
+    {
+        puntuation += p;
+        puntuationHUD.text = puntuation.ToString();
+
     }
     IEnumerator ChronometerRound()
     {
