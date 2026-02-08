@@ -11,6 +11,8 @@ public class HUDSystem : MonoBehaviour
     public float maxSpecial = 50;
     bool chronometerON = true;
     bool isTheRoundFinished = false;
+    [SerializeField] GameObject winScreen;
+    [SerializeField] GameObject loseScreen;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void SetReferencePlayer(MainCharacter c)
     {
@@ -19,16 +21,24 @@ public class HUDSystem : MonoBehaviour
     void Start()
     {
         maxHealth = character.health;
+        winScreen.SetActive(false);
+        loseScreen.SetActive(false);
     }
 
  
     void Update()
     {
-        if (character.changeHealthPoints)
+        if (character.changeHealthPoints && fillHealthPlayer.fillAmount > 0)
         {
             Debug.Log(character.health);
             fillHealthPlayer.fillAmount = character.health / maxHealth;
             character.changeHealthPoints = false;
+        }
+        if (fillHealthPlayer.fillAmount == 0 && !isTheRoundFinished)
+        {
+            isTheRoundFinished = true;
+            Time.timeScale = 0.0f;
+            loseScreen.SetActive(true);
         }
         if (character.increaseSpecialBar && fillSpecialPlayer.fillAmount <= maxSpecial)
         {
@@ -39,10 +49,12 @@ public class HUDSystem : MonoBehaviour
         {
             StartCoroutine(ChronometerRound());
         }
-        else if (fillChronometerPlayer.fillAmount <= 0 && !isTheRoundFinished)
+        if (fillChronometerPlayer.fillAmount <= 0 && !isTheRoundFinished)
         {
             isTheRoundFinished = true;
             Time.timeScale = 0.0f;
+            winScreen.SetActive(true);
+            
         }
     }
     IEnumerator ChronometerRound()
